@@ -53,9 +53,9 @@ with gr.Blocks(css="") as demo:
     gr.Markdown("# ✒️ Writing Comrade")
     gr.Markdown("Comrade, I'm your faithful writing fellow powered by ChatGPT. Destination, commander?")
     gr.Markdown(
-        "🎮 This demo is hosted on: https://huggingface.co/spaces/Spico/writing-comrade <br />"
-        "⭐ Star me on GitHub: https://github.com/Spico197/writing-comrade <br />"
-        "You may want to follow this instruction to get an API key: https://help.openai.com/en/articles/4936850-where-do-i-find-my-secret-api-key"
+        "🎮 This demo is hosted on: [Huggingface Spaces](https://huggingface.co/spaces/Spico/writing-comrade) <br />"
+        "⭐ Star me on GitHub: [Spico197/writing-comrade](https://github.com/Spico197/writing-comrade) <br />"
+        "You may want to follow [this instruction](https://help.openai.com/en/articles/4936850-where-do-i-find-my-secret-api-key) to get an API key."
     )
 
     with gr.Row():
