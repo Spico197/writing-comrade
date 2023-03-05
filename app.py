@@ -17,7 +17,7 @@ def chat(task_type: str, text: str, api_key: str) -> str:
     openai.api_key = api_key
 
     prompt = ""
-    task_type = task_type.lower()
+    task_type = task_type[1:].strip().lower()
     if task_type == "freestyle":
         prompt = text
     else:
@@ -53,14 +53,17 @@ with gr.Blocks(css="") as demo:
     gr.Markdown("# ✒️ Writing Comrade")
     gr.Markdown("Comrade, I'm your faithful writing fellow powered by ChatGPT. Destination, commander?")
     gr.Markdown(
-        "🎮 This demo is hosted on: https://huggingface.co/spaces/Spico/writing-comrade <br />⭐ Star me on GitHub: https://github.com/Spico197/writing-comrade"
+        "🎮 This demo is hosted on: https://huggingface.co/spaces/Spico/writing-comrade <br />"
+        "⭐ Star me on GitHub: https://github.com/Spico197/writing-comrade <br />"
+        "You may want to follow this instruction to get an API key: https://help.openai.com/en/articles/4936850-where-do-i-find-my-secret-api-key"
     )
 
     with gr.Row():
-        api_key = gr.Textbox(label="OpenAI API Key")
+        api_key = gr.Textbox(label='OpenAI API Key')
 
     with gr.Row():
-        task_type = gr.Radio([k.title() for k in instructions.keys()], label="Task")
+        emojis = "🪄🥊💎🫧🎤"
+        task_type = gr.Radio([f"{emojis[i]}{k.title()}" for i, k in enumerate(instructions.keys())], label="Task")
         text_button = gr.Button("Can~ do!")
 
     with gr.Row():
