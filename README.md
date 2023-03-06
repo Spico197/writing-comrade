@@ -20,7 +20,7 @@ ChatGPT as a writing partner.
 
 ```bash
 $ git clone https://github.com/Spico197/writing-comrade
-$ cd writing-comrade
+$ cd writing-comrade 
 $ pip install -r requirements.txt
 $ python app.py
 ```

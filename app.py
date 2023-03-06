@@ -33,7 +33,7 @@ def chat(task_type: str, text: str, api_key: str, tgt_lang: str = "") -> str:
     messages = [
         {
             "role": "system",
-            "content": "You are a helpful writing assistant to help correct grammar mistakes, polish and paraphrase texts.",
+            "content": f"You are a helpful writing assistant who can do {task_type}.",
         },
         {"role": "user", "content": prompt},
     ]
@@ -49,10 +49,10 @@ def chat(task_type: str, text: str, api_key: str, tgt_lang: str = "") -> str:
         finish_reason = res["choices"][0]["finish_reason"]
         if len(messages) >= 5:
             break
-
     response_text = " ".join(
         [msg["content"] for msg in messages if msg["role"] == "assistant"]
-    )
+    ).strip()
+
     return response_text
 
 
@@ -70,7 +70,7 @@ with gr.Blocks(css="") as demo:
 
     with gr.Row().style(equal_height=True):
         with gr.Column(scale=3):
-            emojis = "🪄🥊💎🫧🚌🎤"
+            emojis = "⌨️🥊💎🍦🚌🎤"
             task_type = gr.Radio([f"{emojis[i]}{k.title()}" for i, k in enumerate(instructions.keys())], label="Task")
         with gr.Column(min_width=100):
             tgt_lang = gr.Textbox(label="Target language in translation")
@@ -87,4 +87,4 @@ with gr.Blocks(css="") as demo:
             chat, inputs=[task_type, text_input, api_key, tgt_lang], outputs=text_output
         )
 
-demo.launch()
+demo.launch(show_error=True)
