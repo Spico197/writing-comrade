@@ -7,13 +7,14 @@ instructions = {
     "correction": "Please help me correct mistakes in the text",
     "polishing": "Please help me polish the language and improve my writing",
     "paraphrase": "Please help me paraphrase the text",
+    "translation": "Please help me translate the text",
     "freestyle": "",
 }
 
 template = "{instruction}:\n\nText: {text}"
 
 
-def chat(task_type: str, text: str, api_key: str) -> str:
+def chat(task_type: str, text: str, api_key: str, tgt_lang: str = "") -> str:
     openai.api_key = api_key
 
     prompt = ""
@@ -21,12 +22,18 @@ def chat(task_type: str, text: str, api_key: str) -> str:
     if task_type == "freestyle":
         prompt = text
     else:
-        prompt = template.format(instruction=instructions[task_type], text=text)
+        instruction = instructions[task_type]
+        if task_type == "translation":
+            if tgt_lang:
+                instruction += f" into {tgt_lang.strip()}"
+            else:
+                raise ValueError("Target language cannot be empty when translating")
+        prompt = template.format(instruction=instruction, text=text)
 
     messages = [
         {
             "role": "system",
-            "content": "You are a helpful writing assistant to help correct grammar mistakes and polish or paraphrase texts.",
+            "content": "You are a helpful writing assistant to help correct grammar mistakes, polish and paraphrase texts.",
         },
         {"role": "user", "content": prompt},
     ]
@@ -59,19 +66,25 @@ with gr.Blocks(css="") as demo:
     )
 
     with gr.Row():
-        api_key = gr.Textbox(label='OpenAI API Key')
+        api_key = gr.Textbox(label='OpenAI API Key', type="password")
+
+    with gr.Row().style(equal_height=True):
+        with gr.Column(scale=3):
+            emojis = "🪄🥊💎🫧🚌🎤"
+            task_type = gr.Radio([f"{emojis[i]}{k.title()}" for i, k in enumerate(instructions.keys())], label="Task")
+        with gr.Column(min_width=100):
+            tgt_lang = gr.Textbox(label="Target language in translation")
+        with gr.Column():
+            text_button = gr.Button("Can~ do!", variant="primary")
 
     with gr.Row():
-        emojis = "🪄🥊💎🫧🎤"
-        task_type = gr.Radio([f"{emojis[i]}{k.title()}" for i, k in enumerate(instructions.keys())], label="Task")
-        text_button = gr.Button("Can~ do!")
-
-    with gr.Row():
-        text_input = gr.TextArea(lines=15, label="Input")
-        text_output = gr.TextArea(lines=15, label="Output")
+        with gr.Column():
+            text_input = gr.TextArea(lines=15, label="Input")
+        with gr.Column():
+            text_output = gr.TextArea(lines=15, label="Output")
 
         text_button.click(
-            chat, inputs=[task_type, text_input, api_key], outputs=text_output
+            chat, inputs=[task_type, text_input, api_key, tgt_lang], outputs=text_output
         )
 
 demo.launch()

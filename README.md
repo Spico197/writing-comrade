@@ -28,7 +28,8 @@ $ python app.py
 ## ⚔️🥊Abilities
 
 - Completion (文本补全): Let the model complete a story, or any texts
-- Correction（文本纠错）: Correcting grammar errors
-- Polishing（文本润色）: Polishing texts
-- Paraphrase（文本改写）: Text rewriting
-- Freestyle（直接调用ChatGPT）: This will call raw ChatGPT API without leading instruction prefixes, so you may want to use it as you've done on [the official ChatGPT website](https://chat.openai.com/)
+- Correction (文本纠错): Correcting grammar errors
+- Polishing (文本润色): Polishing texts
+- Paraphrase (文本改写): Text rewriting
+- Translation (机器翻译，需要提供目标语言): Text translation to target language
+- Freestyle (直接调用ChatGPT): This will call raw ChatGPT API without leading instruction prefixes, so you may want to use it as you've done on [the official ChatGPT website](https://chat.openai.com/)
