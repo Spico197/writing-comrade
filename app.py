@@ -70,7 +70,7 @@ with gr.Blocks(css="") as demo:
 
     with gr.Row().style(equal_height=True):
         with gr.Column(scale=3):
-            emojis = "⌨️🥊💎🍦🚌🎤"
+            emojis = "📝🥊💎🍦🚌🎤"
             task_type = gr.Radio([f"{emojis[i]}{k.title()}" for i, k in enumerate(instructions.keys())], label="Task")
         with gr.Column(min_width=100):
             tgt_lang = gr.Textbox(label="Target language in translation")
